@@ -5,7 +5,11 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
 
-   
+    builder.Configuration
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile("appsettings." + builder.Environment.EnvironmentName + ".json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables();
     // Add services to the container.
     Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(builder.Configuration)
